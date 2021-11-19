@@ -12,6 +12,6 @@ namespace NovoProj.Models
 
         public bool ShownomeFantasia => !string.IsNullOrEmpty(nomeFantasia);
 
-        public int cnpj { get; set; }
+        public int Cnpj { get; set; }
     }
 }
