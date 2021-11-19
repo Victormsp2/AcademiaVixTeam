@@ -8,19 +8,47 @@
 </div>
 
 
-     <div class="row align-items-md-stretch">
-      <div class="col-12">
+<div class="row align-items-md-stretch">
+    <div class="col-12">
         <div class="h-100 p-4 text-center text-black bg-warning border-dark rounded-3">
-          <h2 _msthash="1272635" _msttexthash="455715">Empresas</h2>
-          <p _msthash="1224444" _msttexthash="18044923">Stonks</p>
-          <button class="btn btn-outline-dark" type="button" onclick="onDivClick();" _msthash="1516450" _msttexthash="277797">Entrar</button>
+            <h2 _msthash="1272635" _msttexthash="455715">Empresas</h2>
+            <p _msthash="1224444" _msttexthash="18044923">Stonks</p>
+            <button class="btn btn-outline-dark" type="button" onclick="onDivClick();" _msthash="1516450" _msttexthash="277797">Entrar</button>
 
         </div>
-      </div>
     </div>
+</div>
 
-    <script>
-        function onDivClick() {
-            alert('Bem vindo Empreendedor XD');
-        }
-    </script>
+<form>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Codigo da Empresa</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Nome da Empresa</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="Informe o Nome oficial da empresa.</div>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Nome Fantasia da Empresa</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">CNPJ da Empresa</label>
+        <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Concordar com os Termos e Codições</label>
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="alCad();">Finalizar Cadastro</button>
+</form>
+
+<script>
+    function onDivClick() {
+        alert('Bem vindo Empreendedor XD');
+    }
+    function alCad() {
+        alert('Cadastro Realizado');
+    }
+</script>
