@@ -6,22 +6,21 @@ namespace AcademiaVixTeam.Controllers
 {
     public class EmpresaController : Controller
     {
-        private readonly ILogger<EmpresaController> _logger;
-
-        public EmpresaController(ILogger<EmpresaController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        // POST: EmpresaController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("Codigo,Nome,NomeFantasia,Cnpj")] EmpresaModel empresaModel)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("Index");
         }
+
+
     }
+
 }

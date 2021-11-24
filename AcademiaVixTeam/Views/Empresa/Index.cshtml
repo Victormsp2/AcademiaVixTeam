@@ -1,9 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model EmpresaModel
+
+@{
+    ViewData["Title"] = "Cadastro Da Empresa";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bem Vindo Empreendedor @DateTime.Now</h1>
+    <h1 class="display-4">Bem Vindo Empreendedor </h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
@@ -11,37 +13,47 @@
 <div class="row align-items-md-stretch">
     <div class="col-12">
         <div class="h-100 p-4 text-center text-light bg-dark border-dark rounded-3">
-            <h2 _msthash="1272635" _msttexthash="455715">Empresas</h2>
-            <p _msthash="1224444" _msttexthash="18044923">Stonks</p>
-            <button class="btn btn-outline-light" type="button" onclick="onDivClick();" _msthash="1516450" _msttexthash="277797">Entrar</button>
-
+            <h2 _msthash="1272635" _msttexthash="455715">Informe os dados da empresa para realizar o cadastro</h2>
         </div>
     </div>
 </div>
 
-<form class="bg-light text-dark border-light rounded-1">
+<form asp-action="Create" class="bg-light text-dark border-light rounded-1">
     <div class="mb-10">
-        <label for="Codigo" class="form-label">Codigo da Empresa</label>
-        <input type="number" class="form-control" id="Codigo">
+        <label for="Codigo">Codigo da Empresa</label>
+        <input type="number" class="form-control" asp-for=Codigo id="Codigo" placeholder="" required="">
+        <div class="invalid-feedback">
+            <div class="invalid-feedback">
+                Codigo Obrigatorio.
+            </div>.
+        </div>
     </div>
-    <div class="mb-1">
-        <label for="Nome" class="form-label">Nome da Empresa</label>
-        <input type="text" class="form-control" id="Nome" aria-describedby="emailHelp">
-        <div id="emailHelp" class="Informe o Nome oficial da empresa.</div>
+    <div class="mb-3">
+        <label for="Nome">Nome da Empresa</label>
+        <input type="text" class="form-control" asp-for=Nome id="Nome" placeholder="" required="">
+        <div class="invalid-feedback">
+            Nome Obrigatorio.
+        </div>
     </div>
     <div class="mb-3">
         <label for="nomeFantasia" class="form-label">Nome Fantasia da Empresa</label>
-        <input type="text" class="form-control" id="nomeFantasia">
+        <input type="text" class="form-control" asp-for=NomeFantasia id="NomeFantasia" placeholder="" required="">
+        <div class="invalid-feedback">
+            Nome Fantasia Obrigatorio.
+        </div>
     </div>
     <div class="mb-3">
         <label for="Cnpj" class="form-label">CNPJ da Empresa</label>
-        <input type="number" class="form-control" id="Cnpj">
+        <input type="text" class="form-control" asp-for=Cnpj id=" Cnpj" placeholder="" required="">
+        <div class="invalid-feedback">
+            Cnpj Obrigatorio.
+        </div>
     </div>
     <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Concordar com os Termos e Codições</label>
     </div>
-    <button type="submit" class="btn btn-primary" onclick="alCad();">Finalizar Cadastro</button>
+    <button type="submit" class="btn btn-primary" value="Create" type="submit" onclick="alCad();">Finalizar Cadastro</button>
 </form>
 
 <script>
