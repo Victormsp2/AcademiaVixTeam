@@ -1,8 +1,14 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using AcademiaVixTeam.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+builder.Services.AddDbContext<AcademiaVixTeamContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AcademiaVixTeamContext")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
