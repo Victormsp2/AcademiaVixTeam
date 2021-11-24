@@ -16,5 +16,8 @@ namespace AcademiaVixTeam.Models
         public int QuantidadeFilhos { get; set; }
         [Display(Name = "Salario")]
         public decimal Salario { get; set; }
+
+        [Display(Name = "Situação")]
+        public string Situacao { get; set; }
     }
 }

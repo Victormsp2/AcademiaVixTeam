@@ -56,13 +56,10 @@ namespace AcademiaVixTeam.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Codigo,NomeCompleto,Email,DataNascimento,QuantidadeFilhos,Salario")] PessoalModel pessoalModel)
         {
-            if (ModelState.IsValid)
-            {
+                pessoalModel.Situacao = "Ativo";
                 _context.Add(pessoalModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(pessoalModel);
         }
 
         // GET: PessoalModels/Edit/5
