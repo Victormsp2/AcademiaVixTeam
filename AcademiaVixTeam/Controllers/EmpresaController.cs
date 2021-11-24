@@ -6,7 +6,7 @@ namespace AcademiaVixTeam.Controllers
 {
     public class EmpresaController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Cadastro()
         {
             return View();
         }
