@@ -148,8 +148,6 @@ namespace AcademiaVixTeam.Controllers
         }
 
         // GET: PessoalModels/AlterarStatus
-        [HttpGet]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AlterarStatus(int id)
         {
             var pessoalModel = await _context.PessoalModel.FindAsync(id);
