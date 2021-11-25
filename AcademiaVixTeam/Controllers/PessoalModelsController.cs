@@ -146,5 +146,21 @@ namespace AcademiaVixTeam.Controllers
         {
             return _context.PessoalModel.Any(e => e.Codigo == id);
         }
+
+        public async Task<IActionResult> AlterarStatus(int id)
+        {
+            var pessoalModel = await _context.PessoalModel.FindAsync(id);
+            if (pessoalModel.Situacao == "Ativo")
+            {
+                pessoalModel.Situacao = "Inativo";
+            }
+            else
+            {
+                pessoalModel.Situacao = "Ativo";
+            }
+            _context.Update(pessoalModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
