@@ -83,7 +83,7 @@ namespace AcademiaVixTeam.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Codigo,NomeCompleto,Email,DataNascimento,QuantidadeFilhos,Salario")] PessoalModel pessoalModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Codigo,NomeCompleto,Email,DataNascimento,QuantidadeFilhos,Salario,Situacao")] PessoalModel pessoalModel)
         {
             if (id != pessoalModel.Codigo)
             {
@@ -147,6 +147,9 @@ namespace AcademiaVixTeam.Controllers
             return _context.PessoalModel.Any(e => e.Codigo == id);
         }
 
+        // GET: PessoalModels/AlterarStatus
+        [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AlterarStatus(int id)
         {
             var pessoalModel = await _context.PessoalModel.FindAsync(id);
