@@ -62,6 +62,34 @@ namespace AcademiaVixTeam.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
+            if (ModelState.IsValid)
+            {
+                if (PessoalBusiness.ValidaQuantidadeFilhos(pessoalModel.QuantidadeFilhos))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O Numero de filhos deve ser maoir do que zero");
+                    return View(pessoalModel);
+                }
+                if (PessoalBusiness.ValidaDataNascimento(pessoalModel.DataNascimento))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O ano de nascimento deve ser a partir de 1990");
+                    return View(pessoalModel);
+                }
+                if (PessoalBusiness.ValidaSalario(pessoalModel.Salario))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O salario deve ser maior que R$1300,00 e menor que R$ 12000,00");
+                    return View(pessoalModel);
+                }
+
+                var pessoalEmail = _context.PessoalModel.Where(x => x.Email.Equals(pessoalModel.Email) && x.Codigo != pessoalModel.Codigo);
+                if (pessoalEmail.Count() > 0)
+                {
+                    ModelState.AddModelError("Regra de Negócio", " E-mail já cadastrado");
+                    return View(pessoalModel);
+                }
+                _context.AddAsync(pessoalModel);
+                _context.SaveChangesAsync();
+                return View(pessoalModel);
+            }
         }
 
         // GET: PessoalModels/Edit/5
@@ -192,7 +220,16 @@ namespace AcademiaVixTeam.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             var pessoalModel = await _context.PessoalModel.FindAsync(id);
+            if (ModelState.IsValid)
+            {
+                if (PessoalBusiness.ValidaExclusaoPessoalAtiva(pessoalModel.Situacao))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " Não é permitido excluir usuario Ativo");
+                    return View(pessoalModel);
+                }
+            }
             _context.PessoalModel.Remove(pessoalModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
