@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AcademiaVixTeam.Data;
+using AcademiaVixTeam.Business;
 using AcademiaVixTeam.Models;
 
 namespace AcademiaVixTeam.Controllers
@@ -75,6 +76,14 @@ namespace AcademiaVixTeam.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                if (PessoalBusiness.ValidaEditarPessoalInativa(pessoalModel.Situacao))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " Não é permitido editar usuario Inativo");
+                    return View(pessoalModel);
+                }
+            }
             return View(pessoalModel);
         }
 
@@ -92,6 +101,16 @@ namespace AcademiaVixTeam.Controllers
 
             if (ModelState.IsValid)
             {
+                if (PessoalBusiness.ValidaQuantidadeFilhos(pessoalModel.QuantidadeFilhos))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O Numero de filhos deve ser maoir do que zero");
+                    return View(pessoalModel);
+                }
+                if (PessoalBusiness.ValidaDataNascimento(pessoalModel.DataNascimento))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O ano de nascimento deve ser a partir de 1990");
+                    return View(pessoalModel);
+                }
                 try
                 {
                     _context.Update(pessoalModel);
@@ -127,7 +146,14 @@ namespace AcademiaVixTeam.Controllers
             {
                 return NotFound();
             }
-
+            else
+            {
+                if (PessoalBusiness.ValidaExclusaoPessoalAtiva(pessoalModel.Situacao))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " Não é permitido excluir usuario Ativo");
+                    return View(pessoalModel);
+                }
+            }
             return View(pessoalModel);
         }
 
@@ -148,6 +174,8 @@ namespace AcademiaVixTeam.Controllers
         }
 
         // GET: PessoalModels/AlterarStatus
+        
+        [HttpGet]
         public async Task<IActionResult> AlterarStatus(int id)
         {
             var pessoalModel = await _context.PessoalModel.FindAsync(id);
@@ -165,3 +193,4 @@ namespace AcademiaVixTeam.Controllers
         }
     }
 }
+  
