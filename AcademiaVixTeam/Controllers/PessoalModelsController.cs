@@ -61,6 +61,7 @@ namespace AcademiaVixTeam.Controllers
             _context.Add(pessoalModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
         }
 
         // GET: PessoalModels/Edit/5
@@ -124,8 +125,13 @@ namespace AcademiaVixTeam.Controllers
                     ModelState.AddModelError("Regra de Negócio", " O ano de nascimento deve ser a partir de 1990");
                     return View(pessoalModel);
                 }
+                if (PessoalBusiness.ValidaSalario(pessoalModel.Salario))
+                {
+                    ModelState.AddModelError("Regra de Negócio", " O salario deve ser maior que R$1300,00 e menor que R$ 7000,00");
+                    return View(pessoalModel);
+                }
 
-                var pessoalEmail = _context.PessoalModel.Where(x => x.Email.Equals(pessoalModel.Email) && x.Codigo!=pessoalModel.Codigo);
+                var pessoalEmail = _context.PessoalModel.Where(x => x.Email.Equals(pessoalModel.Email) && x.Codigo != pessoalModel.Codigo);
                 if (pessoalEmail.Count() > 0)
                 {
                     ModelState.AddModelError("Regra de Negócio", " E-mail já cadastrado");
@@ -169,10 +175,13 @@ namespace AcademiaVixTeam.Controllers
             }
             else
             {
-                if (PessoalBusiness.ValidaExclusaoPessoalAtiva(pessoalModel.Situacao))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Regra de Negócio", " Não é permitido excluir usuario Ativo");
-                    return View(pessoalModel);
+                    if (PessoalBusiness.ValidaExclusaoPessoalAtiva(pessoalModel.Situacao))
+                    {
+                        ModelState.AddModelError("Regra de Negócio", " Não é permitido excluir usuario Ativo");
+                        return View(pessoalModel);
+                    }
                 }
             }
             return View(pessoalModel);

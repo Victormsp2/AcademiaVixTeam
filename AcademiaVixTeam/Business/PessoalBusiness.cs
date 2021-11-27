@@ -53,5 +53,18 @@
 
         }
 
+        public static bool ValidaSalario(decimal salarioPessoal)
+        {
+            if (salarioPessoal >= 1300 && salarioPessoal <= 7000 )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
     }
 }
