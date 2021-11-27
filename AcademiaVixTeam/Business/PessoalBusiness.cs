@@ -16,7 +16,7 @@
         }
         public static bool ValidaEditarPessoalInativa(string situacaoPessoal)
         {
-            if (situacaoPessoal.Equals("Inativo"))
+            if (situacaoPessoal.Equals("Ativo"))
             {
                 return false;
             }

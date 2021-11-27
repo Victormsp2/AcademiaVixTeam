@@ -57,10 +57,10 @@ namespace AcademiaVixTeam.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Codigo,NomeCompleto,Email,DataNascimento,QuantidadeFilhos,Salario")] PessoalModel pessoalModel)
         {
-                pessoalModel.Situacao = "Ativo";
-                _context.Add(pessoalModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            pessoalModel.Situacao = "Ativo";
+            _context.Add(pessoalModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PessoalModels/Edit/5
@@ -78,9 +78,17 @@ namespace AcademiaVixTeam.Controllers
             }
             else
             {
+                var regrasEdicaoNaoAtendidas = true;
+                var mensagemRegras = string.Empty;
                 if (PessoalBusiness.ValidaEditarPessoalInativa(pessoalModel.Situacao))
                 {
-                    ModelState.AddModelError("Regra de Negócio", " Não é permitido editar usuario Inativo");
+
+                    ModelState.AddModelError("Regra de Negócio", "Não é permitido editar usuario Inativo");
+                    return View(pessoalModel);
+
+                }
+                else
+                {
                     return View(pessoalModel);
                 }
             }
@@ -101,6 +109,11 @@ namespace AcademiaVixTeam.Controllers
 
             if (ModelState.IsValid)
             {
+                if (PessoalBusiness.ValidaEditarPessoalInativa(pessoalModel.Situacao))
+                {
+                    ModelState.AddModelError("Regra de Negócio", "Não é permitido editar usuario Inativo");
+                    return View(pessoalModel);
+                }
                 if (PessoalBusiness.ValidaQuantidadeFilhos(pessoalModel.QuantidadeFilhos))
                 {
                     ModelState.AddModelError("Regra de Negócio", " O Numero de filhos deve ser maoir do que zero");
@@ -111,6 +124,14 @@ namespace AcademiaVixTeam.Controllers
                     ModelState.AddModelError("Regra de Negócio", " O ano de nascimento deve ser a partir de 1990");
                     return View(pessoalModel);
                 }
+
+                var pessoalEmail = _context.PessoalModel.Where(x => x.Email.Equals(pessoalModel.Email) && x.Codigo!=pessoalModel.Codigo);
+                if (pessoalEmail.Count() > 0)
+                {
+                    ModelState.AddModelError("Regra de Negócio", " E-mail já cadastrado");
+                    return View(pessoalModel);
+                }
+
                 try
                 {
                     _context.Update(pessoalModel);
@@ -174,7 +195,7 @@ namespace AcademiaVixTeam.Controllers
         }
 
         // GET: PessoalModels/AlterarStatus
-        
+
         [HttpGet]
         public async Task<IActionResult> AlterarStatus(int id)
         {
@@ -193,4 +214,4 @@ namespace AcademiaVixTeam.Controllers
         }
     }
 }
-  
+
